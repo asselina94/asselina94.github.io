@@ -7,19 +7,18 @@ for line in handle:
     line=line.rstrip()
     if not line.startswith('From:'):continue
     words=line.split()
-    bbb=words[1]
-    #print(bbb)
-    for mail in bbb:
-        ddd[mail]=ddd.get(mail,0)+1
-        #print(mail,'new',ddd[mail])
+    mail=words[1]
+    #print(mail)
+    ddd[mail]=ddd.get(mail,0)+1
+    #print(mail,'new',ddd[mail])
 #find most common word
 largest=-1
 theword=None
 for k,v in ddd.items():
     #print(k,v)
-    if k>largest:
+    if v>largest:
         largest=v
         theword=k
-print(theword,v)        
+print(theword,largest)        
 #print(ddd)        
 
