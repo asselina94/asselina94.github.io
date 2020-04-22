@@ -1,0 +1,8 @@
+#include <stdio.h>
+void my_putchar(char c) { write(1, &c, 1); }
+void my_print_alphabet() {
+    for (int c = 97; c <= 122; ++c) {
+        my_putchar((char)c);
+    }
+    my_putchar('\n');
+}
