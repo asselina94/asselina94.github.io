@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void poloska(int m) {
+    printf("o");
+    if (m > 1) {
+        for (int i=1;i<= m-2;i++)
+            printf("-");
+        printf("o");
+    }
+    printf("\n");
+}
+void my_square(int n, int m) {
+    poloska(m);
+    if (n == 1) return; 
+    for (int i=1; i<= n-2;i++) {
+        printf("|");
+        for (int j=1; j<= m-2; j++) {
+            printf(" ");
+        }
+        if (m > 1)
+            printf("|");
+        printf("\n");
+    }
+    poloska(m);
+}
+
+int main(int ac, char **av) {
+    if (ac < 3) {
+        return 0;
+    }
+    int n = atoi(av[1]);
+    int m = atoi(av[2]);
+    if (n == 0 || m == 0) return 0;
+    my_square(m, n);
+
+    return 0;
+}
