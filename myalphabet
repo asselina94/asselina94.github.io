@@ -6,3 +6,14 @@ void my_print_alphabet() {
     }
     my_putchar('\n');
 }
+
+putchar in str:
+#include <stdio.h>
+
+void my_putstr(char* a){
+        for (int i=0; *(a+i) != '\0'; i++){
+            putchar(a[i]);
+        }
+     //putchar('\n');
+
+}
