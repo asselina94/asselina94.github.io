@@ -17,3 +17,10 @@ void my_putstr(char* a){
      //putchar('\n');
 
 }
+quest 03 1
+int len = strlen(a);
+    int n = len-1;
+    for(int i=0; i<=len/2; i++){
+        swap(a[i],a[n]);
+        n=n-1;
+     }
