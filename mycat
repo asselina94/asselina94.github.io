@@ -12,3 +12,43 @@ for (int i=0; i<argc; i++){
 }
     
 }
+
+int main(int argc , char *argv[]){
+char line[100];
+FILE*file = fopen(argv[1],"r");
+    while(fscanf(file,"%[^\n]\n",line)!=EOF)
+    {
+        printf("%s\n",line);
+    }
+    fclose(file);
+}
+
+int main(int argc , char *argv[]){
+char line[100];
+//for (int i=0; i<argc; i++){ 
+    FILE*file = fopen(argv[1],"r");
+    while(fscanf(file,"%[^\n]\n",line)!=EOF)
+    {
+        printf("%s", line);
+        //printf("\n");
+    }
+    //printf("%s\n",argv[1]);
+    fclose(file);
+//}
+}
+
+nt main(int argc, char *argv[]) {
+  FILE *file;
+  int j;
+ 
+  for(int i = 1; i < argc; i++) {
+    if((file = fopen(argv[i], "r")) == 0) {
+      fprintf(stderr, "%s: %s : %s\n", argv[0], argv[i], strerror(errno));
+    continue;
+    }
+    while((j = getc(file)) != EOF)
+      fprintf(stdout, "%c", j);
+    fclose(file);
+  }
+  exit(0);
+}
