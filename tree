@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+int main(int ac, char **av){
+    int number_layers = atoi(av[1]);
+    int last = 0;
+    int step = 7;
+    for (int i = 0, j = 3; i < number_layers - 1; ++i, ++j) {
+        step += j * 2;
+    }
+    int last_layer_count = step;
+    step /= 2;
+    step -= 4;
+    if (number_layers > 3) step --;
+    int del = 3;
+    for (int layer = 0; layer < number_layers; ++layer) {
+        int row = layer + 4;
+        if (layer == 0) row ++;
+        for (int i=0; i<row; i++){
+            if (i == 0 && layer == 0) continue;
+            for(int j=0; j<row-i+step; j++){
+                    printf(" ");
+            }
+            for(int z=0; z < last + (i*2)-1; z++){
+                printf("*");
+            }
+            printf("\n");
+        }
+
+        if (layer > 1) {
+            last = last + (row * 2) - 6;
+            del --;
+        } else last = last + (row * 2) - 4;
+        step -= del;
+        del ++;
+        
+    }
+
+    last_layer_count -= number_layers;
+    if (last_layer_count % 2 == 1) last_layer_count ++;
+    if (number_layers > 2) last_layer_count --;
+    last_layer_count /= 2;
+
+    for (int i = 0; i < number_layers; ++i) {
+        for (int j = 0; j < last_layer_count; ++j) printf(" ");
+        for (int j = 0; j < number_layers; ++j) printf("|");
+        printf("\n");
+    }
+
+}
