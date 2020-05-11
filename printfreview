@@ -8,6 +8,7 @@ int my_itoa( int value, char *buffer, int base) {                    // imp my-i
     if (base < 2 || base > 16) return -1; //invalid input
     if (value == 0) {
         buffer[0] = '0', buffer[1] = '\0';
+        fwrite(buffer, 1, 1, stdout);
         return 1;
     }
 
