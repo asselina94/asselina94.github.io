@@ -1,0 +1,84 @@
+#include <stdlib.h>
+#include <stdarg.h>
+#include <string.h>
+#include <stdio.h>
+#include <unistd.h>
+
+int my_itoa( int value, char *buffer, int base) {                    // imp my-itoa function
+    if (base < 2 || base > 16) return -1; //invalid input
+    if (value == 0) {
+        buffer[0] = '0', buffer[1] = '\0';
+        return 1;
+    }
+
+    int i = 0;
+    long long tmp = value, tmp2 = value;
+    if (base == 10 && value < 0) {
+        i ++, tmp = -tmp, tmp2 = -tmp2;
+        buffer[0] = '-';
+    } else if (value < 0) {
+        fwrite("(null)", 6, 1, stdout);
+        return 6;
+    }
+    while(tmp != 0) {
+        tmp /= base;
+        i ++;
+    }
+    buffer[i] = '\0', i --;
+    while (tmp2 != 0) {
+        char c = tmp2 % base + '0';
+        if (tmp2 % base > 9) c = (tmp2 % base - 10) + 'a';
+        buffer[i] = c;
+        tmp2 /= base;
+        i --;
+    }
+    fwrite(buffer, strlen(buffer), 1, stdout);
+    return strlen(buffer);
+}
+
+int my_printf(char * restrict format, ...){
+    va_list arguments;          // list of arg
+    if (format == NULL) return (-1);
+
+    int sz = 0;
+    char str[50];
+    va_start(arguments, format);
+    for (int i = 0; format[i]; i ++) {
+        if (format[i] == '%') {
+            i ++;
+            if (format[i] == 'd' || format[i] == 'u' || format[i] == 'o' || format[i] == 'x') {
+                int base = format[i] == 'o' ? 8 : format[i] == 'x' ? 16 : 10;
+                sz += my_itoa(va_arg(arguments, int ), str, base);
+            } else if (format[i] == 'c') {
+                char s[] = {(char)va_arg(arguments, int )};
+                fwrite(s, 1, 1, stdout), sz ++;
+            } else if (format[i] == 's') {
+                char *s = va_arg(arguments,char *);
+                if (s == NULL) s = "(null)";
+                fwrite(s, strlen(s), 1, stdout), sz += strlen(s);
+            } else if (format[i] == 'p') {
+                fwrite("0x", 2, 1, stdout);
+                sz += my_itoa((int)va_arg(arguments, void *), str, 16) + 2;
+            } else break;
+        } else {
+            char s[1] = {format[i]};
+            fwrite(s, 1, 1, stdout), sz ++;
+        }
+    }
+    va_end(arguments);
+    return sz;
+}
+
+int main() {
+    /*char c = 'a';
+    printf("Hello %d %c %x world %d %s %p\n", -102, 'a',174, 103, "aa12123", (void *)1213);
+    printf("%x Hello world\n", -160);
+    int d = my_printf("%x Hello world\n", -160);
+    printf("%d\n", d);
+    int e = my_printf("%p! 0\n", 'x');
+    printf("Hello %d %c %x %o world %d %s %p\n", -102, 'a',174, 3333, 999, "aa12123",(void *)1213);
+    int cc = my_printf(NULL);
+    int k = my_printf("Hello %d %c %x %o world %d %s %p\n", -102, 'a',174, 3333, 999, "aa12123",(void *)1213);
+    printf("%d", k);*/
+}    
+
